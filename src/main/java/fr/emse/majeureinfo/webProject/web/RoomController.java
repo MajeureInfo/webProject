@@ -31,7 +31,7 @@ public class RoomController {
     }
 
     @GetMapping("/{roomId}")
-    public RoomDto single(@PathVariable Long roomId) {
+    public RoomDto get(@PathVariable Long roomId) {
         return new RoomDto(roomDao.findOne(roomId));
     }
 }
