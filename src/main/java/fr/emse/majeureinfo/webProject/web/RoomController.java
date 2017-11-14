@@ -2,6 +2,7 @@ package fr.emse.majeureinfo.webProject.web;
 
 import fr.emse.majeureinfo.webProject.dao.RoomDao;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,4 +30,8 @@ public class RoomController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/{roomId}")
+    public RoomDto single(@PathVariable Long roomId) {
+        return new RoomDto(roomDao.findOne(roomId));
+    }
 }
