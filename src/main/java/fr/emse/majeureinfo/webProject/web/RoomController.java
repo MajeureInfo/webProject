@@ -46,4 +46,12 @@ public class RoomController {
         room.switchNoise();
         return new RoomDto(room);
     }
+
+    @GetMapping("/list-with-on-lights")
+    public List<RoomDto> listWithOnLight() {
+        return roomDao.listWithOnLight()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
 }
