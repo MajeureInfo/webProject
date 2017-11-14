@@ -40,6 +40,9 @@ public class Room {
     }
 
     public Noise getNoise() {
-        return noise;
+        return noise; }
+
+    public void switchLight() {
+        this.light.switchStatus();
     }
 }
