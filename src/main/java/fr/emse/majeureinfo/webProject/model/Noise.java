@@ -36,4 +36,8 @@ public class Noise {
     public Status getStatus() {
         return status;
     }
+
+    public void switchStatus() {
+        this.status = this.status == Status.ON ? Status.OFF : Status.ON;
+    }
 }

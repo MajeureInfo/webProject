@@ -45,4 +45,8 @@ public class Room {
     public void switchLight() {
         this.light.switchStatus();
     }
+
+    public void switchNoise(){
+        this.noise.switchStatus();
+    }
 }

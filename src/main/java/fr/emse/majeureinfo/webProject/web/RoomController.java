@@ -39,4 +39,11 @@ public class RoomController {
         room.switchLight();
         return new RoomDto(room);
     }
+
+    @PostMapping("/{roomId}/switch-ringer")
+    public RoomDto switchRinger(@PathVariable Long roomId) {
+        Room room = roomDao.findOne(roomId);
+        room.switchNoise();
+        return new RoomDto(room);
+    }
 }
