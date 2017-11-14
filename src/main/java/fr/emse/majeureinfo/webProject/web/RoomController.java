@@ -1,10 +1,8 @@
 package fr.emse.majeureinfo.webProject.web;
 
 import fr.emse.majeureinfo.webProject.dao.RoomDao;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import fr.emse.majeureinfo.webProject.model.Room;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -33,5 +31,12 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public RoomDto get(@PathVariable Long roomId) {
         return new RoomDto(roomDao.findOne(roomId));
+    }
+
+    @PostMapping("/{roomId}/switch-light")
+    public RoomDto switchLight(@PathVariable Long roomId) {
+        Room room = roomDao.findOne(roomId);
+        room.switchLight();
+        return new RoomDto(room);
     }
 }
