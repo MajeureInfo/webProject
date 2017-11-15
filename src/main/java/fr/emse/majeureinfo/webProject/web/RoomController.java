@@ -34,17 +34,23 @@ public class RoomController {
     }
 
     @PostMapping("/{roomId}/switch-light")
-    public RoomDto switchLight(@PathVariable Long roomId) {
+    public List<RoomDto> switchLight(@PathVariable Long roomId) {
         Room room = roomDao.findOne(roomId);
         room.switchLight();
-        return new RoomDto(room);
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/{roomId}/switch-ringer")
-    public RoomDto switchRinger(@PathVariable Long roomId) {
+    public List<RoomDto> switchRinger(@PathVariable Long roomId) {
         Room room = roomDao.findOne(roomId);
         room.switchNoise();
-        return new RoomDto(room);
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/list-with-on-lights")
