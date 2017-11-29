@@ -3,6 +3,7 @@ package fr.emse.majeureinfo.webProject.web;
 
 import fr.emse.majeureinfo.webProject.dao.BuildingDao;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,10 @@ public class BuildingController {
                 .stream()
                 .map(BuildingDto::new)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{buildingId}")
+    public BuildingDto get(@PathVariable Long buildingId) {
+        return new BuildingDto(buildingDao.findOne(buildingId));
     }
 }
