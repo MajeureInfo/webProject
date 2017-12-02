@@ -11,6 +11,13 @@ public class Room {
     private Long id;
 
     /**
+     * The Building where a room is located
+     */
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "building_id")
+    private Building building;
+
+    /**
      * The Light of a room
      */
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -26,9 +33,14 @@ public class Room {
     public Room() {
     }
 
-    public Room(Light light, Noise noise) {
+    public Room(Building building, Light light, Noise noise) {
+        this.building = building;
         this.light = light;
         this.noise = noise;
+    }
+
+    public Building getBuilding() {
+        return building;
     }
 
     public Long getId() {
@@ -40,7 +52,8 @@ public class Room {
     }
 
     public Noise getNoise() {
-        return noise; }
+        return noise;
+    }
 
     public void switchLight() {
         this.light.switchStatus();
