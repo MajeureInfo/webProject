@@ -53,9 +53,33 @@ public class RoomController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/list-with-on-lights")
-    public List<RoomDto> listWithOnLight() {
-        return roomDao.listWithOnLight()
+    @GetMapping("/list-with-light-on")
+    public List<RoomDto> listWithLightOn() {
+        return roomDao.listWithLightOn()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/list-with-light-off")
+    public List<RoomDto> listWithLightOff() {
+        return roomDao.listWithLightOff()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/list-with-ringer-on")
+    public List<RoomDto> listWithRingerOn() {
+        return roomDao.listWithRingerOn()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/list-with-ringer-off")
+    public List<RoomDto> listWithRingerOff() {
+        return roomDao.listWithRingerOff()
                 .stream()
                 .map(RoomDto::new)
                 .collect(Collectors.toList());

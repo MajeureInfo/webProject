@@ -25,6 +25,10 @@ public class Noise {
         this.status = status;
     }
 
+    public void switchStatus() {
+        this.status = this.status == Status.ON ? Status.OFF : Status.ON;
+    }
+
     public Long getId() {
         return id;
     }
@@ -37,7 +41,4 @@ public class Noise {
         return status;
     }
 
-    public void switchStatus() {
-        this.status = this.status == Status.ON ? Status.OFF : Status.ON;
-    }
 }
