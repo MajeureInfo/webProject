@@ -24,7 +24,7 @@ public class Room {
     private Light light;
 
     /**
-     * The Noise of a room
+     * The ringer of a room
      */
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Noise noise;
@@ -55,11 +55,9 @@ public class Room {
         return noise;
     }
 
-    public void switchLight() {
-        this.light.switchStatus();
-    }
+    public void switchLight() { light.switchStatus();}
 
     public void switchNoise(){
-        this.noise.switchStatus();
+        noise.switchStatus();
     }
 }

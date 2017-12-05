@@ -38,58 +38,91 @@ public class RoomDaoCustomTest {
     @Autowired
     private DataSource dataSource;
 
-    protected void dbSetup(Operation op1, Operation op2, Operation op3, Operation op4, Operation op5, Operation op6) {
-        DbSetup setup = new DbSetup(new DataSourceDestination(dataSource),
-                Operations.sequenceOf(DELETE_ALL, op1, op2, op3, op4, op5, op6));
+    protected void dbSetup(Operation op) {
+        DbSetup setup = new DbSetup(new DataSourceDestination(dataSource), op);
         TRACKER.launchIfNecessary(setup);
     }
 
     @Before
     public void prepare() {
-        Operation light1 =
+        Operation op = Operations.sequenceOf(DELETE_ALL,
                 Insert.into("LIGHT")
                         .columns("id", "level", "status")
                         .values(1L, 22, Status.ON)
-                        .build();
-        Operation noise1 =
+                        .build(),
+
                 Insert.into("NOISE")
-                        .withDefaultValue("status", Status.ON)
+                        .withDefaultValue("status", Status.OFF)
                         .columns("id", "level")
                         .values(1L, 12)
-                        .build();
-        Operation room1 =
+                        .build(),
+
                 Insert.into("ROOM")
                         .columns("ID", "LIGHT_ID", "NOISE_ID")
                         .values(1L, 1L, 1L)
-                        .build();
-        Operation light2 =
+                        .build(),
+
                 Insert.into("LIGHT")
                         .columns("id", "level", "status")
                         .values(2L, 223, Status.OFF)
-                        .build();
-        Operation noise2 =
+                        .build(),
+
                 Insert.into("NOISE")
                         .withDefaultValue("status", Status.ON)
                         .columns("id", "level")
                         .values(2L, 34)
-                        .build();
-        Operation room2 =
+                        .build(),
+
                 Insert.into("ROOM")
                         .columns("ID", "LIGHT_ID", "NOISE_ID")
                         .values(2L, 2L, 2L)
-                        .build();
-        dbSetup(light1, noise1, room1, light2, noise2, room2);
-    }
+                        .build(),
 
-    @Test
-    public void listWithOnLight() {
-        TRACKER.skipNextLaunch();
-        assertThat(roomDao.listWithOnLight()).hasSize(1);
+                Insert.into("LIGHT")
+                        .columns("id", "level", "status")
+                        .values(3L, 56, Status.ON)
+                        .build(),
+
+                Insert.into("NOISE")
+                        .withDefaultValue("status", Status.ON)
+                        .columns("id", "level")
+                        .values(3L, 42)
+                        .build(),
+
+                Insert.into("ROOM")
+                        .columns("ID", "LIGHT_ID", "NOISE_ID")
+                        .values(3L, 3L, 3L)
+                        .build());
+        dbSetup(op);
     }
 
     @Test
     public void shouldFindAllLights() {
         TRACKER.skipNextLaunch();
-        assertThat(roomDao.findAll()).hasSize(2);
+        assertThat(roomDao.findAll()).hasSize(3);
+    }
+
+    @Test
+    public void listWithLightOn() {
+        TRACKER.skipNextLaunch();
+        assertThat(roomDao.listWithLightOn()).hasSize(2);
+    }
+
+    @Test
+    public void listWithLightOff() {
+        TRACKER.skipNextLaunch();
+        assertThat(roomDao.listWithLightOff()).hasSize(1);
+    }
+
+    @Test
+    public void listWithRingerOn() {
+        TRACKER.skipNextLaunch();
+        assertThat(roomDao.listWithRingerOn()).hasSize(2);
+    }
+
+    @Test
+    public void listWithRingerOff() {
+        TRACKER.skipNextLaunch();
+        assertThat(roomDao.listWithRingerOff()).hasSize(1);
     }
 }
