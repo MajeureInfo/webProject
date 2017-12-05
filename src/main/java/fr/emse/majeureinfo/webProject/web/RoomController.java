@@ -2,6 +2,7 @@ package fr.emse.majeureinfo.webProject.web;
 
 import fr.emse.majeureinfo.webProject.dao.RoomDao;
 import fr.emse.majeureinfo.webProject.model.Room;
+import fr.emse.majeureinfo.webProject.model.Status;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -84,4 +85,61 @@ public class RoomController {
                 .map(RoomDto::new)
                 .collect(Collectors.toList());
     }
+
+    @PostMapping("/switch-all-lights-on")
+    public List<RoomDto> switchAllLightsOn() {
+        List<Room> rooms = roomDao.findAll();
+        for (Room room : rooms){
+            if (room.getLight().getStatus() == Status.OFF){
+                room.switchLight();
+            }
+        }
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/switch-all-lights-off")
+    public List<RoomDto> switchAllLightsOff() {
+        List<Room> rooms = roomDao.findAll();
+        for (Room room : rooms){
+            if (room.getLight().getStatus() == Status.ON){
+                room.switchLight();
+            }
+        }
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/switch-all-ringers-on")
+    public List<RoomDto> switchAllRingersOn() {
+        List<Room> rooms = roomDao.findAll();
+        for (Room room : rooms){
+            if (room.getNoise().getStatus() == Status.OFF){
+                room.switchNoise();
+            }
+        }
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/switch-all-ringers-off")
+    public List<RoomDto> switchAllRingersOff() {
+        List<Room> rooms = roomDao.findAll();
+        for (Room room : rooms){
+            if (room.getNoise().getStatus() == Status.ON){
+                room.switchNoise();
+            }
+        }
+        return roomDao.findAll()
+                .stream()
+                .map(RoomDto::new)
+                .collect(Collectors.toList());
+    }
+
 }
